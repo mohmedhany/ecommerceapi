@@ -1,0 +1,53 @@
+# Build results
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+
+# NuGet
+*.nupkg
+# NuGet Symbols
+*.pdb.srspkg
+
+# Visual Studio files
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.rsuser
+
+# Rider
+.idea/
+
+# VS Code
+.vscode/
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Entity Framework
+*.db
+*.mdf
+*.ldf
+
+# Application settings
+appsettings.*.json
+!appsettings.json
+!appsettings.Development.json
+
+# Secrets
+*.pfx
+*.key
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ Thumbs.db
+Desktop.ini
