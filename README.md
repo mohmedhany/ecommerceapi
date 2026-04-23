@@ -68,83 +68,86 @@ dotnet test
 
 ## API Endpoints
 
-### Authentication
-| Method | Endpoint | Description |
-|-------|----------|-------------|
-| POST | `/api/auth/register` | Register new user |
-| POST | `/api/auth/login` | User login |
-| POST | `/api/auth/social-login` | Social auth (Google, Facebook) |
-| POST | `/api/auth/forgot-password` | Request password reset |
-| POST | `/api/auth/reset-password` | Reset password |
-| POST | `/api/auth/change-password` | Change password |
+### Authentication (`/api/auth`)
+| Method | Endpoint | Auth | Description |
+|-------|----------|------|-------------|
+| POST | `/register` | No | Register new user |
+| POST | `/login` | No | User login |
+| POST | `/social-login` | No | Social auth (Google, Facebook) |
+| POST | `/forgot-password` | No | Request password reset |
+| POST | `/reset-password` | No | Reset password with token |
+| POST | `/change-password` | Yes | Change password |
+| PUT | `/profile` | Yes | Update profile |
+| GET | `/me` | Yes | Get current user |
 
-### Products
-| Method | Endpoint | Description |
-|-------|----------|-------------|
-| GET | `/api/products` | List products (paginated) |
-| GET | `/api/products/{id}` | Get product by ID |
-| GET | `/api/products/search?q=` | Search products |
-| GET | `/api/products/category/{id}` | Products by category |
-| POST | `/api/products` | Create product |
-| PUT | `/api/products/{id}` | Update product |
-| DELETE | `/api/products/{id}` | Delete product |
+### Products (`/api/products`)
+| Method | Endpoint | Auth | Description |
+|-------|----------|------|-------------|
+| GET | `/` | No | List products (paginated) |
+| GET | `/{id}` | No | Get product by ID |
+| GET | `/search?q=` | No | Search products |
+| GET | `/category/{id}` | No | Products by category |
+| POST | `/` | Yes | Create product |
+| PUT | `/{id}` | Yes | Update product |
+| DELETE | `/{id}` | Yes | Delete product |
 
-### Categories
-| Method | Endpoint | Description |
-|-------|----------|-------------|
-| GET | `/api/categories` | List categories |
-| GET | `/api/categories/{id}` | Get category |
-| POST | `/api/categories` | Create category |
-| DELETE | `/api/categories/{id}` | Delete category |
+### Categories (`/api/categories`)
+| Method | Endpoint | Auth | Description |
+|-------|----------|------|-------------|
+| GET | `/` | No | List categories |
+| GET | `/{id}` | No | Get category |
+| POST | `/` | Yes | Create category |
+| DELETE | `/{id}` | Yes | Delete category |
 
-### Cart
-| Method | Endpoint | Description |
-|-------|----------|-------------|
-| GET | `/api/cart` | Get user cart |
-| POST | `/api/cart` | Add to cart |
-| PUT | `/api/cart/{productId}` | Update quantity |
-| DELETE | `/api/cart/{productId}` | Remove from cart |
-| DELETE | `/api/cart` | Clear cart |
+### Cart (`/api/cart`)
+| Method | Endpoint | Auth | Description |
+|-------|----------|------|-------------|
+| GET | `/` | Yes | Get user cart |
+| POST | `/` | Yes | Add to cart |
+| PUT | `/{productId}` | Yes | Update quantity |
+| DELETE | `/{productId}` | Yes | Remove from cart |
+| DELETE | `/` | Yes | Clear cart |
 
-### Orders
-| Method | Endpoint | Description |
-|-------|----------|-------------|
-| GET | `/api/orders` | User orders |
-| GET | `/api/orders/{id}` | Order details |
-| POST | `/api/orders` | Create order |
+### Orders (`/api/orders`)
+| Method | Endpoint | Auth | Description |
+|-------|----------|------|-------------|
+| GET | `/` | Yes | User orders |
+| GET | `/{id}` | Yes | Order details |
+| POST | `/` | Yes | Create order |
 
-### Dashboard (Admin)
-| Method | Endpoint | Description |
-|-------|----------|-------------|
-| GET | `/api/dashboard/stats` | Overview stats |
-| GET | `/api/dashboard/revenue` | Revenue report |
-| GET | `/api/dashboard/top-products` | Best sellers |
-| GET | `/api/dashboard/low-stock` | Inventory alerts |
+### Dashboard (`/api/dashboard`)
+| Method | Endpoint | Auth | Description |
+|-------|----------|------|-------------|
+| GET | `/stats` | Yes | Overview stats |
+| GET | `/revenue` | Yes | Revenue report |
+| GET | `/top-products` | Yes | Best sellers |
+| GET | `/low-stock` | Yes | Inventory alerts |
+| GET | `/orders-stats` | Yes | Order statistics |
+| GET | `/users-stats` | Yes | User statistics |
 
-### Upload
-| Method | Endpoint | Description |
-|-------|----------|-------------|
-| POST | `/api/upload/image` | Upload image |
+### Upload (`/api/upload`)
+| Method | Endpoint | Auth | Description |
+|-------|----------|------|-------------|
+| POST | `/image` | Yes | Upload image |
+| POST | `/images` | Yes | Upload multiple |
+| DELETE | `/` | Yes | Delete image |
 
 ## Testing
 
 ```bash
 # Run all tests
 dotnet test
-
-# Run with coverage
-dotnet test --collect:"XPlat Code Coverage"
 ```
 
-Test Coverage:
-- **ProductService** - CRUD, search, pagination
-- **CategoryService** - CRUD operations
-- **CartService** - Cart management
-- **OrderService** - Order creation, stock updates
-- **AuthService** - Registration, login, social auth
-- **DashboardService** - Analytics
-- **FileService** - File operations
-- **EmailService** - Email sending
+**Test Coverage:**
+- ProductService - CRUD, search, pagination
+- CategoryService - CRUD operations
+- CartService - Cart management
+- OrderService - Order creation, stock updates
+- AuthService - Registration, login, social auth
+- DashboardService - Analytics
+- FileService - File operations
+- EmailService - Email sending
 
 **Total: 60 tests**
 
