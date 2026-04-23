@@ -68,6 +68,10 @@ public class ProductsController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateProductDto dto)
     {
+        if (!User.IsInRole("Admin")) return Forbid();
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+        
         var product = await _productService.CreateAsync(dto);
         return CreatedAtAction(nameof(GetById), new { id = product.Id }, product);
     }
@@ -76,6 +80,10 @@ public class ProductsController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, [FromBody] UpdateProductDto dto)
     {
+        if (!User.IsInRole("Admin")) return Forbid();
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+        
         var product = await _productService.UpdateAsync(id, dto);
         if (product == null) return NotFound();
         return Ok(product);
@@ -85,6 +93,7 @@ public class ProductsController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
+        if (!User.IsInRole("Admin")) return Forbid();
         var result = await _productService.DeleteAsync(id);
         if (!result) return NotFound();
         return NoContent();

@@ -35,6 +35,10 @@ public class CategoriesController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateCategoryDto dto)
     {
+        if (!User.IsInRole("Admin")) return Forbid();
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+        
         var category = await _categoryService.CreateAsync(dto);
         return CreatedAtAction(nameof(GetById), new { id = category.Id }, category);
     }
@@ -43,6 +47,8 @@ public class CategoriesController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
+        if (!User.IsInRole("Admin")) return Forbid();
+        
         var result = await _categoryService.DeleteAsync(id);
         if (!result) return NotFound();
         return NoContent();

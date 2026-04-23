@@ -20,6 +20,9 @@ public class AuthController : ControllerBase
     [HttpPost("register")]
     public async Task<ActionResult<AuthResponse>> Register([FromBody] RegisterRequest request)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+        
         try
         {
             var result = await _authService.RegisterAsync(request);
@@ -34,6 +37,9 @@ public class AuthController : ControllerBase
     [HttpPost("login")]
     public async Task<ActionResult<AuthResponse>> Login([FromBody] LoginRequest request)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+        
         try
         {
             var result = await _authService.LoginAsync(request);
@@ -48,6 +54,9 @@ public class AuthController : ControllerBase
     [HttpPost("forgot-password")]
     public async Task<ActionResult<AuthResponse>> ForgotPassword([FromBody] ForgotPasswordRequest request)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+        
         try
         {
             var result = await _authService.ForgotPasswordAsync(request);
@@ -62,6 +71,9 @@ public class AuthController : ControllerBase
     [HttpPost("reset-password")]
     public async Task<ActionResult> ResetPassword([FromBody] ResetPasswordRequest request)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+        
         try
         {
             var result = await _authService.ResetPasswordAsync(request);
@@ -77,6 +89,9 @@ public class AuthController : ControllerBase
     [HttpPost("change-password")]
     public async Task<ActionResult<AuthResponse>> ChangePassword([FromBody] ChangePasswordRequest request)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+        
         try
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
@@ -93,6 +108,9 @@ public class AuthController : ControllerBase
     [HttpPut("profile")]
     public async Task<ActionResult<AuthResponse>> UpdateProfile([FromBody] UpdateProfileRequest request)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+        
         try
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
@@ -108,6 +126,9 @@ public class AuthController : ControllerBase
     [HttpPost("social-login")]
     public async Task<ActionResult<AuthResponse>> SocialLogin([FromBody] SocialLoginRequest request)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+        
         try
         {
             var result = await _authService.SocialLoginAsync(

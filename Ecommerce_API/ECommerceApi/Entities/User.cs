@@ -9,6 +9,7 @@ public class User
     public string FullName { get; set; } = string.Empty;
     public string? Provider { get; set; }
     public string? ProviderKey { get; set; }
+    public string Role { get; set; } = "User";
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();

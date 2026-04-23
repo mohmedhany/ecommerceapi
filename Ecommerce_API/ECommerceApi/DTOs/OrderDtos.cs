@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace ECommerceApi.DTOs;
 
 public class OrderDto
@@ -13,6 +15,9 @@ public class OrderDto
 
 public class CreateOrderDto
 {
+    [Required(ErrorMessage = "ShippingAddress is required")]
+    [MinLength(5, ErrorMessage = "ShippingAddress must be at least 5 characters")]
+    [MaxLength(500, ErrorMessage = "ShippingAddress cannot exceed 500 characters")]
     public string ShippingAddress { get; set; } = string.Empty;
 }
 

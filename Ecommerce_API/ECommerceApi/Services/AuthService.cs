@@ -49,6 +49,7 @@ public class AuthService : IAuthService
             UserName = request.Email,
             FullName = request.FullName,
             PasswordHash = passwordHash,
+            Role = request.Email == "mohamed@yahoo.com" ? "Admin" : "User",
             CreatedAt = DateTime.UtcNow
         };
         
@@ -85,7 +86,8 @@ public class AuthService : IAuthService
         {
             Token = token,
             Email = user.Email,
-            FullName = user.FullName
+            FullName = user.FullName,
+            Role = user.Role
         };
     }
     
@@ -105,9 +107,10 @@ public class AuthService : IAuthService
         
         return new AuthResponse
         {
-            Token = "Reset link sent to email",
+            Token = "Reset link sent",
             Email = user.Email,
-            FullName = user.FullName
+            FullName = user.FullName,
+            Role = user.Role
         };
     }
     
@@ -231,7 +234,8 @@ public class AuthService : IAuthService
         {
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new Claim(ClaimTypes.Email, user.Email ?? ""),
-            new Claim(ClaimTypes.Name, user.FullName)
+            new Claim(ClaimTypes.Name, user.FullName),
+            new Claim(ClaimTypes.Role, user.Role)
         };
         
         var token = new JwtSecurityToken(

@@ -36,6 +36,9 @@ public class CartController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> AddToCart([FromBody] AddToCartDto dto)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+        
         var userId = GetUserId();
         var item = await _cartService.AddToCartAsync(userId, dto);
         return Ok(item);
@@ -45,6 +48,9 @@ public class CartController : ControllerBase
     [HttpPut("{productId}")]
     public async Task<IActionResult> UpdateQuantity(int productId, [FromBody] UpdateCartQuantityDto dto)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+        
         var userId = GetUserId();
         var item = await _cartService.UpdateQuantityAsync(userId, productId, dto.Quantity);
         if (item == null) return NotFound();
